@@ -47,8 +47,8 @@
 </details>
 
 ## Sobre o projeto
-
-Todo
+Nosso projeto consiste em desenvolver um app mobile colaborativo de receitas culinárias (ao estilo do app TudoGostoso).
+Toda a documentação do projeto pode ser encontrada nesta [página do Notion](https://fabmont.notion.site/Projeto-Integrado-Mobile-dca0d08bc2fe45288b4d0d52ecc6ff33)
 
 ### Tecnologias
 
