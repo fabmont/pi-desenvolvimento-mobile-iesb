@@ -7,13 +7,14 @@
 <p align="center">
   <a href="https://github.com/fabmont/pi-desenvolvimento-mobile-iesb">
     <!-- <img src="images/logo.png" alt="Logo" width="80" height="80"> -->
-    [LOGO]
+    <h2 align="center">
+      <b>Cookz</b>
+    </h2>
   </a>
 
-  <h3 align="center">Nome do Projeto</h3>
 
   <p align="center">
-    Descrição do projeto
+    App colaborativo para compartilhamento de receitas culinárias.
     <br />
     <a href="https://link">Ver demo</a>
     ·
