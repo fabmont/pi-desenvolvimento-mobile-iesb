@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 import Login from './Login';
 import CriarConta from './CriarConta';
@@ -11,6 +12,7 @@ import ModoPreparo from './ModoPreparo';
 import CriarReceita from './CriarReceita';
 import Perfil from './Perfil';
 import EditarPerfil from './EditarPerfil';
+import { auth } from '../services/firebase';
 
 const Stack = createNativeStackNavigator();
 const defaultRouteProps = {
@@ -20,12 +22,13 @@ const defaultRouteProps = {
 };
 
 export default function Pages() {
-  const isSigned = true;
+  const [user, loading, error] = useAuthState(auth);
+  const isLogged = !!user && !loading && !error;
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {isSigned ? (
+        {isLogged ? (
           <>
             <Stack.Screen name="Feed" component={Feed} {...defaultRouteProps} />
             <Stack.Screen
