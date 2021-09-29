@@ -141,12 +141,20 @@ Contributions are what make the open source community such an amazing place to b
         </sub>
       </a>
     </td>
-  <tr>
     <td align="center">
       <a href="https://github.com/judsonmillerd">
         <img src="https://avatars.githubusercontent.com/u/83422031" width="100px;" alt="Foto do judsonmillerd no GitHub"/><br>
         <sub>
           <b>Judson Miller</b>
+        </sub>
+      </a>
+    </td>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/maysvx">
+        <img src="https://avatars.githubusercontent.com/u/72236606" width="100px;" alt="Foto do maysvx no GitHub"/><br>
+        <sub>
+          <b>Júlia Daphiny</b>
         </sub>
       </a>
     </td>
