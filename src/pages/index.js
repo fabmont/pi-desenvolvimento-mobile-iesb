@@ -1,7 +1,16 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import AppLoading from 'expo-app-loading';
+import {
+  useFonts,
+  Inter_400Regular,
+  Inter_700Bold,
+  Inter_500Medium,
+  Inter_900Black,
+} from '@expo-google-fonts/inter';
 
 import Login from './Login';
 import CriarConta from './CriarConta';
@@ -22,8 +31,19 @@ const defaultRouteProps = {
 };
 
 export default function Pages() {
+  const [fontsLoaded] = useFonts({
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_700Bold,
+    Inter_900Black,
+  });
+
   const [user, loading, error] = useAuthState(auth);
   const isLogged = !!user && !loading && !error;
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
     <NavigationContainer>
