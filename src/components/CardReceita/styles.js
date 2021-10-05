@@ -8,6 +8,13 @@ export default StyleSheet.create({
   container: {
     flexDirection: 'row',
     elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
     backgroundColor: 'white',
     marginHorizontal: wp(4),
     marginBottom: wp(4),
