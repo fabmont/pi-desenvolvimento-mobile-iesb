@@ -70,7 +70,6 @@ export default function Feed() {
             item: { title, imgUrl, owner, timeToPrepare, difficulty },
           }) => (
             <CardReceita
-              a={console.log(title)}
               title={title}
               imgUrl={imgUrl}
               owner={owner}
