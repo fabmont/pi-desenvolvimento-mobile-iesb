@@ -13,7 +13,7 @@ export default StyleSheet.create({
   header: {
     paddingHorizontal: wp(4),
     paddingBottom: hp(2),
-    paddingTop: wp(2),
+    paddingTop: hp(1),
     borderBottomColor: '#E4E4E4',
     borderBottomWidth: 1,
   },
@@ -31,7 +31,7 @@ export default StyleSheet.create({
   },
   searchInput: {
     flex: 1,
-    marginLeft: wp(4),
+    marginHorizontal: wp(4),
     fontFamily: 'Inter_400Regular',
     justifyContent: 'center',
   },

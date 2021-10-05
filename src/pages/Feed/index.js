@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Keyboard,
   TextInput,
@@ -9,11 +9,15 @@ import {
 } from 'react-native';
 import { Layout, Text } from '@ui-kitten/components';
 import { Feather } from '@expo/vector-icons';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 import styles from './styles';
 import CardReceita from '../../components/CardReceita';
+import FloatingButton from '../../components/FloatingButton';
 
 export default function Feed() {
+  const [search, setSearch] = useState('');
+
   const data = [
     {
       uuid: '2321jh32hg3u12g3u12',
@@ -25,6 +29,8 @@ export default function Feed() {
       difficulty: 'Fácil',
     },
   ];
+
+  const handleClearSearch = () => setSearch('');
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -40,7 +46,17 @@ export default function Feed() {
               style={styles.searchInput}
               placeholderTextColor="#c9c9c9"
               placeholder="Pesquisar receitas"
+              onChangeText={setSearch}
+              value={search}
             />
+            {!!search.length && (
+              <TouchableOpacity
+                hitSlop={{ bottom: 14, top: 14, right: 14, left: 14 }}
+                onPress={handleClearSearch}
+              >
+                <Feather name="x-circle" size={16} color="#c9c9c9" />
+              </TouchableOpacity>
+            )}
           </View>
 
           <View style={styles.filterRow}>
@@ -65,7 +81,7 @@ export default function Feed() {
 
         <FlatList
           data={[...data]}
-          style={{ paddingTop: 16 }}
+          style={{ paddingTop: hp(2) }}
           renderItem={({
             item: { title, imgUrl, owner, timeToPrepare, difficulty },
           }) => (
@@ -78,8 +94,11 @@ export default function Feed() {
               onPress={() => null}
             />
           )}
+          ListFooterComponent={<View style={{ flex: 1, height: hp(12) }} />}
           keyExtractor={({ uuid }) => uuid}
         />
+
+        <FloatingButton />
       </Layout>
     </TouchableWithoutFeedback>
   );
