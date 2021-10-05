@@ -51,7 +51,7 @@
   "private": true,
   "lint-staged": {
     "*.+(js|jsx)": [
-      "eslint src/** --fix --max-warnings=0",
+      "eslint src/**/*.js --fix --max-warnings=0",
       "git add"
     ],
     "*.+(json|css|md)": [

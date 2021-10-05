@@ -2,6 +2,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import AppLoading from 'expo-app-loading';
 import {
@@ -22,13 +23,28 @@ import CriarReceita from './CriarReceita';
 import Perfil from './Perfil';
 import EditarPerfil from './EditarPerfil';
 import { auth } from '../services/firebase';
+import Tabbar from '../components/Tabbar';
 
 const Stack = createNativeStackNavigator();
+const Tabs = createBottomTabNavigator();
+
 const defaultRouteProps = {
   options: {
     headerShown: false,
   },
 };
+
+const TabViews = () => (
+  <Tabs.Navigator tabBar={Tabbar}>
+    <Tabs.Screen name="Feed" component={Feed} {...defaultRouteProps} />
+    <Tabs.Screen
+      name="Favoritos"
+      component={Favoritos}
+      {...defaultRouteProps}
+    />
+    <Tabs.Screen name="Perfil" component={Perfil} {...defaultRouteProps} />
+  </Tabs.Navigator>
+);
 
 export default function Pages() {
   const [fontsLoaded] = useFonts({
@@ -50,7 +66,11 @@ export default function Pages() {
       <Stack.Navigator>
         {isLogged ? (
           <>
-            <Stack.Screen name="Feed" component={Feed} {...defaultRouteProps} />
+            <Stack.Screen
+              name="Home"
+              component={TabViews}
+              {...defaultRouteProps}
+            />
             <Stack.Screen
               name="Favoritos"
               component={Favoritos}
