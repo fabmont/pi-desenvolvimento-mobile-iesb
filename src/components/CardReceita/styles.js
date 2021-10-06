@@ -73,7 +73,6 @@ export default StyleSheet.create({
   },
   difficultyBadgeText: {
     color: '#01885B',
-    marginLeft: 4,
     fontFamily: 'Inter_400Regular',
   },
   row: {

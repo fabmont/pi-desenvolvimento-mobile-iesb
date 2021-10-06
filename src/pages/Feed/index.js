@@ -98,7 +98,7 @@ export default function Feed() {
           keyExtractor={({ uuid }) => uuid}
         />
 
-        <FloatingButton />
+        <FloatingButton iconName="plus" label="Criar receita" />
       </Layout>
     </TouchableWithoutFeedback>
   );

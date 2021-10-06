@@ -3,8 +3,8 @@ import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 export default StyleSheet.create({
   container: {
-    paddingHorizontal: wp(4),
-    paddingVertical: wp(4),
+    paddingHorizontal: wp(5),
+    paddingVertical: wp(5),
     borderRadius: 100,
     flexDirection: 'row',
     alignItems: 'center',
