@@ -1,3 +1,4 @@
+/* eslint-disable react/style-prop-object */
 import React, { useState } from 'react';
 import {
   Keyboard,
@@ -14,9 +15,11 @@ import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import styles from './styles';
 import CardReceita from '../../components/CardReceita';
 import FloatingButton from '../../components/FloatingButton';
+import FilterModal from '../../components/FilterModal';
 
 export default function Feed() {
   const [search, setSearch] = useState('');
+  const [filterModalVisible, setFilterModalVisible] = useState(false);
 
   const data = [
     {
@@ -71,7 +74,11 @@ export default function Feed() {
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity activeOpacity={0.7} style={styles.filterBadge}>
+            <TouchableOpacity
+              onPress={() => setFilterModalVisible(true)}
+              activeOpacity={0.7}
+              style={styles.filterBadge}
+            >
               <Text category="label" style={styles.filterBadgeText}>
                 Filtros
               </Text>
@@ -99,6 +106,11 @@ export default function Feed() {
         />
 
         <FloatingButton iconName="plus" label="Criar receita" />
+
+        <FilterModal
+          visible={filterModalVisible}
+          setVisible={setFilterModalVisible}
+        />
       </Layout>
     </TouchableWithoutFeedback>
   );
