@@ -16,10 +16,18 @@ import styles from './styles';
 import CardReceita from '../../components/CardReceita';
 import FloatingButton from '../../components/FloatingButton';
 import FilterModal from '../../components/FilterModal';
+import categories from '../../constants/categories';
 
 export default function Feed() {
   const [search, setSearch] = useState('');
   const [filterModalVisible, setFilterModalVisible] = useState(false);
+  const [categoryState, setCategoryState] = useState(
+    categories.map((item) => ({
+      id: item.id,
+      label: item.label,
+      checked: false,
+    }))
+  );
 
   const data = [
     {
@@ -77,9 +85,23 @@ export default function Feed() {
             <TouchableOpacity
               onPress={() => setFilterModalVisible(true)}
               activeOpacity={0.7}
-              style={styles.filterBadge}
+              style={
+                categoryState.find((i) => i.checked === true)
+                  ? { ...styles.filterBadge, ...styles.filterBadgeActive }
+                  : styles.filterBadge
+              }
             >
-              <Text category="label" style={styles.filterBadgeText}>
+              <Text
+                category="label"
+                style={
+                  categoryState.find((i) => i.checked === true)
+                    ? {
+                        ...styles.filterBadgeText,
+                        ...styles.filterBadgeTextActive,
+                      }
+                    : styles.filterBadgeText
+                }
+              >
                 Filtros
               </Text>
             </TouchableOpacity>
@@ -110,6 +132,9 @@ export default function Feed() {
         <FilterModal
           visible={filterModalVisible}
           setVisible={setFilterModalVisible}
+          categoryState={categoryState}
+          setCategoryState={setCategoryState}
+          initialState={categoryState.map((i) => i.checked)}
         />
       </Layout>
     </TouchableWithoutFeedback>

@@ -35,9 +35,12 @@ export default StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     flexDirection: 'row',
     paddingTop: hp(2),
     paddingBottom: hp(0.5),
+  },
+  clearFilters: {
+    marginTop: hp(1),
   },
 });

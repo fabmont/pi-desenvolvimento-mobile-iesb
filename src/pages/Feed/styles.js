@@ -60,9 +60,16 @@ export default StyleSheet.create({
     marginTop: hp(2),
     marginRight: wp(2),
   },
+  filterBadgeActive: {
+    backgroundColor: '#FFAA00',
+    borderColor: '#FFAA00',
+  },
   filterBadgeText: {
     fontFamily: 'Inter_400Regular',
     color: '#424242',
+  },
+  filterBadgeTextActive: {
+    color: '#FFF',
   },
   filterRow: {
     flexDirection: 'row',
