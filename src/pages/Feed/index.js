@@ -11,6 +11,7 @@ import {
 import { Layout, Text } from '@ui-kitten/components';
 import { Feather } from '@expo/vector-icons';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { useNavigation } from '@react-navigation/native';
 
 import styles from './styles';
 import CardReceita from '../../components/CardReceita';
@@ -19,6 +20,7 @@ import FilterModal from '../../components/FilterModal';
 import categories from '../../constants/categories';
 
 export default function Feed() {
+  const { navigate } = useNavigation();
   const [search, setSearch] = useState('');
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [categoryState, setCategoryState] = useState(
@@ -32,7 +34,7 @@ export default function Feed() {
   const data = [
     {
       uuid: '2321jh32hg3u12g3u12',
-      title: 'Salada',
+      title: 'Salada Caesar',
       imgUrl:
         'https://www.dicasdemulher.com.br/wp-content/uploads/2017/10/salada-caesar-receitas.jpg',
       owner: 'John Due',
@@ -120,7 +122,7 @@ export default function Feed() {
               owner={owner}
               timeToPrepare={timeToPrepare}
               difficulty={difficulty}
-              onPress={() => null}
+              onPress={() => navigate('ModoPreparo')}
             />
           )}
           ListFooterComponent={<View style={{ flex: 1, height: hp(12) }} />}
