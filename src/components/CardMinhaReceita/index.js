@@ -1,0 +1,48 @@
+import React from 'react';
+import { ImageBackground, TouchableOpacity, View } from 'react-native';
+import { Button, Icon, Text } from '@ui-kitten/components';
+import { Feather } from '@expo/vector-icons';
+
+import styles from './styles';
+
+export default function CardMinhaReceita({
+  title,
+  imgUrl,
+  timeToPrepare,
+  onPress,
+}) {
+  return (
+    <TouchableOpacity
+      style={styles.container}
+      onPress={onPress}
+      activeOpacity={0.8}
+    >
+      <ImageBackground source={{ uri: imgUrl }} style={styles.imageBackground}>
+        <View style={styles.overlay}>
+          <View style={styles.content}>
+            <View>
+              <Text category="h5" style={styles.recipeTitle}>
+                {title}
+              </Text>
+              <Text category="label" style={styles.recipeOwner}>
+                {timeToPrepare} min
+              </Text>
+            </View>
+
+            <View style={styles.footer}>
+              <View style={styles.row}>
+                <Feather name="heart" size={24} color="#FFF" />
+                <Text style={styles.likeLabel}>100</Text>
+              </View>
+
+              <Button
+                size="small"
+                accessoryLeft={(props) => <Icon {...props} name="edit" />}
+              />
+            </View>
+          </View>
+        </View>
+      </ImageBackground>
+    </TouchableOpacity>
+  );
+}
