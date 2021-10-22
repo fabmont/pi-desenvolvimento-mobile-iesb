@@ -7,6 +7,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 
 export default function Toolbar({
+  alignment = 'center',
   title,
   subtitle,
   accessoryLeft,
@@ -24,7 +25,7 @@ export default function Toolbar({
 
   return (
     <TopNavigation
-      alignment="center"
+      alignment={alignment}
       title={title}
       subtitle={subtitle}
       accessoryLeft={hasBackButton ? renderBackAction : accessoryLeft}
