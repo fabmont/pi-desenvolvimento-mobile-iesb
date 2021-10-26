@@ -12,7 +12,6 @@
     </h2>
   </a>
 
-
   <p align="center">
     App colaborativo para compartilhamento de receitas culinárias.
     <br />
@@ -48,6 +47,7 @@
 </details>
 
 ## Sobre o projeto
+
 Nosso projeto consiste em desenvolver um app mobile colaborativo de receitas culinárias (ao estilo do app TudoGostoso).
 Toda a documentação do projeto pode ser encontrada nesta [página do Notion](https://fabmont.notion.site/Projeto-Integrado-Mobile-dca0d08bc2fe45288b4d0d52ecc6ff33)
 
@@ -154,7 +154,7 @@ Contributions are what make the open source community such an amazing place to b
       <a href="https://github.com/maysvx">
         <img src="https://avatars.githubusercontent.com/u/72236606" width="100px;" alt="Foto do maysvx no GitHub"/><br>
         <sub>
-          <b>Júlia Daphiny</b>
+          <b>Mayara Vieira</b>
         </sub>
       </a>
     </td>

@@ -1,7 +1,17 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import AppLoading from 'expo-app-loading';
+import {
+  useFonts,
+  Inter_400Regular,
+  Inter_700Bold,
+  Inter_500Medium,
+  Inter_900Black,
+} from '@expo-google-fonts/inter';
 
 import Login from './Login';
 import CriarConta from './CriarConta';
@@ -13,24 +23,54 @@ import CriarReceita from './CriarReceita';
 import Perfil from './Perfil';
 import EditarPerfil from './EditarPerfil';
 import { auth } from '../services/firebase';
+import Tabbar from '../components/Tabbar';
 
 const Stack = createNativeStackNavigator();
+const Tabs = createBottomTabNavigator();
+
 const defaultRouteProps = {
   options: {
     headerShown: false,
   },
 };
 
+const TabViews = () => (
+  <Tabs.Navigator tabBar={Tabbar}>
+    <Tabs.Screen name="Feed" component={Feed} {...defaultRouteProps} />
+    <Tabs.Screen
+      name="Favoritos"
+      component={Favoritos}
+      {...defaultRouteProps}
+    />
+    <Tabs.Screen name="Perfil" component={Perfil} {...defaultRouteProps} />
+  </Tabs.Navigator>
+);
+
 export default function Pages() {
+  const [fontsLoaded] = useFonts({
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_700Bold,
+    Inter_900Black,
+  });
+
   const [user, loading, error] = useAuthState(auth);
   const isLogged = !!user && !loading && !error;
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
         {isLogged ? (
           <>
-            <Stack.Screen name="Feed" component={Feed} {...defaultRouteProps} />
+            <Stack.Screen
+              name="Home"
+              component={TabViews}
+              {...defaultRouteProps}
+            />
             <Stack.Screen
               name="Favoritos"
               component={Favoritos}
