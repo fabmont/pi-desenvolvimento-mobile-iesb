@@ -3,8 +3,10 @@
 /* eslint-disable react/jsx-boolean-value */
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { Button, Icon } from '@ui-kitten/components';
+import Toolbar from '../../components/Toolbar';
 import styles from './styles';
 
 export default function CriarConta({ navigation }) {
@@ -15,6 +17,7 @@ export default function CriarConta({ navigation }) {
 
   return (
     <View style={styles.container}>
+       <Toolbar title="Criar conta" hasBackButton />
       <Text>Nome completo</Text>
       <TextInput
         style={styles.field}
@@ -43,7 +46,7 @@ export default function CriarConta({ navigation }) {
         value={confirmarsenha}
         onChangeText={(password) => setConfirmarSenha(password)}
       />
-      <Button title="CRIAR CONTA" color="#FFA500" />
+      <Button title="CRIAR CONTA" status='warning' size='small'/>
     </View>
   );
 }
