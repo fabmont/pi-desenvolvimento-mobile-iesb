@@ -1,17 +1,26 @@
-/* eslint-disable prettier/prettier */
 import { StyleSheet } from 'react-native';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    padding: 10,
+    paddingTop: getStatusBarHeight(),
   },
-  field: {
-    height: 45,
-    borderBottomWidth: 0,
-    borderBottomColor: '#bbb',
-    padding: 5,
-    marginBottom: 15,
+  body: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: hp(2),
+    paddingHorizontal: wp(4),
+  },
+  inputs: {
+    marginBottom: hp(2),
+  },
+  submitBtn: {
+    width: '100%',
+    marginTop: hp(2),
   },
 });

@@ -1,53 +1,24 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/jsx-boolean-value */
-/* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
-import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { Button, Icon } from '@ui-kitten/components';
+import React from 'react';
+import { Keyboard, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import { Button, Input, Layout } from '@ui-kitten/components';
 import Toolbar from '../../components/Toolbar';
 import styles from './styles';
+import PasswordInput from '../../components/PasswordInput';
 
-export default function CriarConta({ navigation }) {
-  const [nome, setNome] = useState('');
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [confirmarsenha, setConfirmarSenha] = useState('');
-
+export default function CriarConta() {
   return (
-    <View style={styles.container}>
-       <Toolbar title="Criar conta" hasBackButton />
-      <Text>Nome completo</Text>
-      <TextInput
-        style={styles.field}
-        value={nome}
-        onChangeText={(text) => setNome(text)}
-      />
-      <Text>E-mail</Text>
-      <TextInput
-        style={styles.field}
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-      />
-      <Text>Senha</Text>
-      <TextInput
-        style={styles.field}
-        keyboardType="number-pad"
-        secureTextEntry={true}
-        value={senha}
-        onChangeText={(password) => setSenha(password)}
-      />
-      <Text>Confirmar senha</Text>
-      <TextInput
-        style={styles.field}
-        keyboardType="number-pad"
-        secureTextEntry={true}
-        value={confirmarsenha}
-        onChangeText={(password) => setConfirmarSenha(password)}
-      />
-      <Button title="CRIAR CONTA" status='warning' size='small'/>
-    </View>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <Layout style={styles.container}>
+        <Toolbar title="Criar conta" hasBackButton />
+        <ScrollView contentContainerStyle={styles.body}>
+          <Input label="Nome completo" style={styles.inputs} />
+          <Input label="E-mail" style={styles.inputs} />
+          <PasswordInput label="Senha" style={styles.inputs} />
+          <PasswordInput label="Confirmar senha" style={styles.inputs} />
+
+          <Button style={styles.submitBtn}>Criar conta</Button>
+        </ScrollView>
+      </Layout>
+    </TouchableWithoutFeedback>
   );
 }
-
