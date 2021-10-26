@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import {
   Layout,
   Text,
@@ -27,6 +28,7 @@ const data = [
 ];
 
 export default function Perfil() {
+  const { navigate } = useNavigation();
   const [openPopup, setOpenPopup] = useState(false);
 
   const toggleMenu = () => {
@@ -42,7 +44,10 @@ export default function Perfil() {
 
   const renderRightActions = () => (
     <>
-      <TopNavigationAction icon={(props) => <Icon {...props} name="edit" />} />
+      <TopNavigationAction
+        onPress={() => navigate('EditarPerfil')}
+        icon={(props) => <Icon {...props} name="edit" />}
+      />
       <OverflowMenu
         anchor={renderMenuAction}
         visible={openPopup}
