@@ -14,6 +14,7 @@ import Toolbar from '../../components/Toolbar';
 import CardMinhaReceita from '../../components/CardMinhaReceita';
 
 import styles from './styles';
+import useAuth from '../../hooks/useAuth';
 
 const data = [
   {
@@ -30,7 +31,7 @@ const data = [
 export default function Perfil() {
   const { navigate } = useNavigation();
   const [openPopup, setOpenPopup] = useState(false);
-
+  const { logout } = useAuth();
   const toggleMenu = () => {
     setOpenPopup(!openPopup);
   };
@@ -55,6 +56,7 @@ export default function Perfil() {
       >
         <MenuItem
           accessoryLeft={(props) => <Icon {...props} name="log-out" />}
+          onPress={logout}
           title="Sair"
         />
       </OverflowMenu>

@@ -23,4 +23,16 @@ export default StyleSheet.create({
     width: '100%',
     marginTop: hp(2),
   },
+  alertbox: {
+    width: '100%',
+    alignItems: 'center',
+    backgroundColor: '#FF6D63',
+    borderRadius: wp(2),
+    padding: wp(4),
+    marginBottom: hp(2),
+  },
+  alertboxText: {
+    fontFamily: 'Inter_400Regular',
+    color: 'white',
+  },
 });

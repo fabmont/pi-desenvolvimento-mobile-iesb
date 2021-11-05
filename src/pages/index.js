@@ -57,7 +57,7 @@ export default function Pages() {
   const [user, loading, error] = useAuthState(auth);
   const isLogged = !!user && !loading && !error;
 
-  if (!fontsLoaded) {
+  if (!fontsLoaded || loading) {
     return <AppLoading />;
   }
 
