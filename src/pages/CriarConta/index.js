@@ -1,36 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Keyboard,
   ScrollView,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { Button, Input, Layout, Spinner, Text } from '@ui-kitten/components';
+import { Button, Input, Layout, Text } from '@ui-kitten/components';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
 import Toolbar from '../../components/Toolbar';
 import styles from './styles';
 import PasswordInput from '../../components/PasswordInput';
-import useAuth from '../../hooks/useAuth';
-
-const LoadingIndicator = ({ style }) => (
-  <View style={style}>
-    <Spinner size="small" />
-  </View>
-);
+import createUser from '../../services/createUser';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 export default function CriarConta() {
-  const { createUser, isCreatingUser, userCreationError } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const handleCreateUser = async (values) => {
+    setLoading(true);
+
+    try {
+      await createUser(values);
+    } catch (err) {
+      setError(err);
+    }
+
+    setLoading(false);
+  };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <Layout style={styles.container}>
         <Toolbar title="Criar conta" hasBackButton />
         <ScrollView contentContainerStyle={styles.body}>
-          {userCreationError && (
+          {error && (
             <View style={styles.alertbox}>
-              <Text style={styles.alertboxText}>{userCreationError}</Text>
+              <Text style={styles.alertboxText}>{error}</Text>
             </View>
           )}
           <Formik
@@ -40,7 +48,7 @@ export default function CriarConta() {
               password: '',
               confirmPassword: '',
             }}
-            onSubmit={(values) => createUser(values)}
+            onSubmit={handleCreateUser}
             validateOnMount
             validationSchema={yup.object({
               fullName: yup.string().required('Campo obrigatório.'),
@@ -124,8 +132,8 @@ export default function CriarConta() {
                 <Button
                   style={styles.submitBtn}
                   onPress={handleSubmit}
-                  disabled={!isValid || isCreatingUser}
-                  accessoryLeft={isCreatingUser && LoadingIndicator}
+                  disabled={!isValid || loading}
+                  accessoryLeft={loading && LoadingIndicator}
                 >
                   Criar conta
                 </Button>

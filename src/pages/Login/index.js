@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Image, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Button, Input, Layout, Spinner, Text } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
@@ -8,7 +8,7 @@ import * as yup from 'yup';
 import styles from './styles';
 import loginCover from '../../assets/login-cover.png';
 import PasswordInput from '../../components/PasswordInput';
-import useAuth from '../../hooks/useAuth';
+import login from '../../services/login';
 
 const LoadingIndicator = ({ style }) => (
   <View style={style}>
@@ -18,16 +18,28 @@ const LoadingIndicator = ({ style }) => (
 
 export default function Login() {
   const { navigate } = useNavigation();
-  const { handleLogin, isLogginIn, loginError } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleLogin = async (values) => {
+    setLoading(true);
+
+    try {
+      await login(values);
+    } catch (err) {
+      setLoading(false);
+      setError(err);
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <Layout style={styles.container}>
         <Image style={styles.cover} source={loginCover} resizeMode="stretch" />
         <Layout style={styles.body}>
-          {!!loginError && (
+          {!!error && (
             <View style={styles.alertbox}>
-              <Text style={styles.alertboxText}>{loginError}</Text>
+              <Text style={styles.alertboxText}>{error}</Text>
             </View>
           )}
           <Formik
@@ -43,7 +55,7 @@ export default function Login() {
                 .required('Campo obrigatório.')
                 .min(6, 'Mínimo de 6 caracteres.'),
             })}
-            onSubmit={(val) => handleLogin(val)}
+            onSubmit={handleLogin}
           >
             {({
               handleSubmit,
@@ -86,8 +98,8 @@ export default function Login() {
                 <Button
                   style={styles.loginBtn}
                   onPress={handleSubmit}
-                  disabled={!isValid || isLogginIn}
-                  accessoryLeft={isLogginIn && LoadingIndicator}
+                  disabled={!isValid || loading}
+                  accessoryLeft={loading && LoadingIndicator}
                 >
                   Entrar
                 </Button>

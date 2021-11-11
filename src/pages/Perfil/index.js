@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -10,11 +10,14 @@ import {
   Icon,
   MenuItem,
 } from '@ui-kitten/components';
-import Toolbar from '../../components/Toolbar';
-import CardMinhaReceita from '../../components/CardMinhaReceita';
+import { signOut } from 'firebase/auth';
 
 import styles from './styles';
-import useAuth from '../../hooks/useAuth';
+import getUserInfo from '../../services/getUserInfo';
+import defaultAvatar from '../../constants/defaultAvatar';
+import Toolbar from '../../components/Toolbar';
+import CardMinhaReceita from '../../components/CardMinhaReceita';
+import { auth } from '../../services/firebase';
 
 const data = [
   {
@@ -31,7 +34,8 @@ const data = [
 export default function Perfil() {
   const { navigate } = useNavigation();
   const [openPopup, setOpenPopup] = useState(false);
-  const { logout } = useAuth();
+  const [userInfo, setUserInfo] = useState(null);
+
   const toggleMenu = () => {
     setOpenPopup(!openPopup);
   };
@@ -46,7 +50,7 @@ export default function Perfil() {
   const renderRightActions = () => (
     <>
       <TopNavigationAction
-        onPress={() => navigate('EditarPerfil')}
+        onPress={() => navigate('EditarPerfil', { ...userInfo })}
         icon={(props) => <Icon {...props} name="edit" />}
       />
       <OverflowMenu
@@ -56,18 +60,24 @@ export default function Perfil() {
       >
         <MenuItem
           accessoryLeft={(props) => <Icon {...props} name="log-out" />}
-          onPress={logout}
+          onPress={() => signOut(auth)}
           title="Sair"
         />
       </OverflowMenu>
     </>
   );
 
+  useEffect(() => {
+    const listener = getUserInfo(setUserInfo);
+
+    return () => listener();
+  }, []);
+
   return (
     <Layout style={styles.container}>
       <Toolbar
         alignment="start"
-        title="User Name"
+        title={userInfo?.fullName}
         accessoryRight={renderRightActions}
       />
       <ScrollView>
@@ -75,21 +85,18 @@ export default function Perfil() {
           <Avatar
             style={styles.avatar}
             source={{
-              uri: 'https://randomuser.me/api/portraits/men/79.jpg',
+              uri: userInfo?.thumbUrl || defaultAvatar,
             }}
           />
 
           <View style={styles.userInfoBox}>
-            <Text style={styles.userInfoText}>user@mail.com</Text>
-            <Text style={styles.userInfoText}>25 anos</Text>
-            <Text style={styles.userInfoText}>Cozinheiro gastronômico</Text>
+            <Text style={styles.userInfoText}>{userInfo?.email}</Text>
+            <Text style={styles.userInfoText}>{userInfo?.age}</Text>
+            <Text style={styles.userInfoText}>{userInfo?.occupation}</Text>
           </View>
         </View>
         <View style={styles.bioBox}>
-          <Text style={styles.userInfoText}>
-            Sou um jovem recém formado em gastronomia e apaixonado pela
-            culinária brasileira.
-          </Text>
+          <Text style={styles.userInfoText}>{userInfo?.bio}</Text>
         </View>
 
         {data.map((i) => (
