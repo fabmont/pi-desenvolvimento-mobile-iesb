@@ -109,7 +109,6 @@ export default function EditarPerfil(props) {
               fullName: yup.string().required('Campo obrigatório.'),
               age: yup.string().required('Campo obrigatório'),
               occupation: yup.string().required('Campo obrigatório'),
-              bio: yup.string().required('Campo obrigatório'),
             })}
           >
             {({

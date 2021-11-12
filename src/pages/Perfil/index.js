@@ -6,9 +6,8 @@ import {
   Text,
   Avatar,
   TopNavigationAction,
-  OverflowMenu,
   Icon,
-  MenuItem,
+  Button,
 } from '@ui-kitten/components';
 import { signOut } from 'firebase/auth';
 
@@ -33,38 +32,13 @@ const data = [
 
 export default function Perfil() {
   const { navigate } = useNavigation();
-  const [openPopup, setOpenPopup] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
 
-  const toggleMenu = () => {
-    setOpenPopup(!openPopup);
-  };
-
-  const renderMenuAction = () => (
+  const renderRightAction = () => (
     <TopNavigationAction
-      icon={(props) => <Icon {...props} name="more-vertical" />}
-      onPress={toggleMenu}
+      onPress={() => signOut(auth)}
+      icon={(props) => <Icon {...props} name="log-out" />}
     />
-  );
-
-  const renderRightActions = () => (
-    <>
-      <TopNavigationAction
-        onPress={() => navigate('EditarPerfil', { ...userInfo })}
-        icon={(props) => <Icon {...props} name="edit" />}
-      />
-      <OverflowMenu
-        anchor={renderMenuAction}
-        visible={openPopup}
-        onBackdropPress={toggleMenu}
-      >
-        <MenuItem
-          accessoryLeft={(props) => <Icon {...props} name="log-out" />}
-          onPress={() => signOut(auth)}
-          title="Sair"
-        />
-      </OverflowMenu>
-    </>
   );
 
   useEffect(() => {
@@ -76,9 +50,9 @@ export default function Perfil() {
   return (
     <Layout style={styles.container}>
       <Toolbar
-        alignment="start"
-        title={userInfo?.fullName}
-        accessoryRight={renderRightActions}
+        alignment="center"
+        title="Perfil"
+        accessoryRight={renderRightAction}
       />
       <ScrollView>
         <View style={styles.headerContainer}>
@@ -90,13 +64,26 @@ export default function Perfil() {
           />
 
           <View style={styles.userInfoBox}>
+            <Text style={styles.userName}>{userInfo?.fullName}</Text>
             <Text style={styles.userInfoText}>{userInfo?.email}</Text>
-            <Text style={styles.userInfoText}>{userInfo?.age}</Text>
+            <Text style={styles.userInfoText}>
+              {userInfo?.age && `${userInfo?.age} anos`}{' '}
+            </Text>
             <Text style={styles.userInfoText}>{userInfo?.occupation}</Text>
           </View>
         </View>
         <View style={styles.bioBox}>
           <Text style={styles.userInfoText}>{userInfo?.bio}</Text>
+
+          <Button
+            size="small"
+            appearance="outline"
+            status="primary"
+            style={{ marginTop: 12 }}
+            onPress={() => navigate('EditarPerfil', { ...userInfo })}
+          >
+            Editar perfil
+          </Button>
         </View>
 
         {data.map((i) => (
