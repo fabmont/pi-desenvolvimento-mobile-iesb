@@ -14,7 +14,8 @@ export default async ({
   prepare,
 }) => {
   try {
-    const userUid = auth.currentUser.uid;
+    const { currentUser } = auth;
+
     const payload = {
       title: name,
       description,
@@ -23,10 +24,8 @@ export default async ({
       servesNumber,
       ingredients,
       prepare,
-      owner: userUid,
+      owner: { uid: currentUser.uid, name: currentUser.displayName },
     };
-
-    console.log(payload);
 
     const collectionRef = collection(firestore, 'recipes');
     const { id } = await addDoc(collectionRef, payload);

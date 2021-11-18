@@ -7,9 +7,10 @@ import styles from './styles';
 
 export default function CardMinhaReceita({
   title,
-  imgUrl,
+  thumbUrl,
   timeToPrepare,
   onPress,
+  likes,
 }) {
   return (
     <TouchableOpacity
@@ -17,7 +18,10 @@ export default function CardMinhaReceita({
       onPress={onPress}
       activeOpacity={0.8}
     >
-      <ImageBackground source={{ uri: imgUrl }} style={styles.imageBackground}>
+      <ImageBackground
+        source={{ uri: thumbUrl }}
+        style={styles.imageBackground}
+      >
         <View style={styles.overlay}>
           <View style={styles.content}>
             <View>
@@ -32,7 +36,7 @@ export default function CardMinhaReceita({
             <View style={styles.footer}>
               <View style={styles.row}>
                 <Feather name="heart" size={24} color="#FFF" />
-                <Text style={styles.likeLabel}>100</Text>
+                <Text style={styles.likeLabel}>{likes || 0}</Text>
               </View>
 
               <Button

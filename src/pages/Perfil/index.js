@@ -10,6 +10,7 @@ import {
   Button,
 } from '@ui-kitten/components';
 import { signOut } from 'firebase/auth';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 import styles from './styles';
 import getUserInfo from '../../services/getUserInfo';
@@ -17,22 +18,12 @@ import defaultAvatar from '../../constants/defaultAvatar';
 import Toolbar from '../../components/Toolbar';
 import CardMinhaReceita from '../../components/CardMinhaReceita';
 import { auth } from '../../services/firebase';
-
-const data = [
-  {
-    uuid: '2321jh32hg3u12g3u12',
-    title: 'Salada Caesar',
-    imgUrl:
-      'https://www.dicasdemulher.com.br/wp-content/uploads/2017/10/salada-caesar-receitas.jpg',
-    owner: 'John Due',
-    timeToPrepare: 15,
-    difficulty: 'Fácil',
-  },
-];
+import getRecipesByUser from '../../services/getRecipesByUser';
 
 export default function Perfil() {
   const { navigate } = useNavigation();
   const [userInfo, setUserInfo] = useState(null);
+  const [recipes, setRecipes] = useState([]);
 
   const renderRightAction = () => (
     <TopNavigationAction
@@ -43,8 +34,12 @@ export default function Perfil() {
 
   useEffect(() => {
     const listener = getUserInfo(setUserInfo);
+    const listenerRecipes = getRecipesByUser(setRecipes);
 
-    return () => listener();
+    return () => {
+      listener();
+      listenerRecipes();
+    };
   }, []);
 
   return (
@@ -86,8 +81,21 @@ export default function Perfil() {
           </Button>
         </View>
 
-        {data.map((i) => (
-          <CardMinhaReceita key={i.uuid} {...i} />
+        {!recipes.length && (
+          <View
+            style={{
+              height: heightPercentageToDP(40),
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Text style={{ color: '#a1a1a1' }}>
+              Você ainda não criou nenhuma receita.
+            </Text>
+          </View>
+        )}
+        {recipes.map((i) => (
+          <CardMinhaReceita key={i.uid} {...i} />
         ))}
       </ScrollView>
     </Layout>
