@@ -47,4 +47,22 @@ export default StyleSheet.create({
     borderRadius: 0,
     marginTop: hp(2),
   },
+  thumbBox: {
+    borderWidth: 1,
+    borderColor: '#d5d5d5',
+    marginBottom: hp(2),
+    paddingHorizontal: wp(6),
+    height: hp(18),
+    backgroundColor: '#f1f1f1',
+    borderRadius: wp(3),
+    alignItems: 'center',
+    overflow: 'hidden',
+    justifyContent: 'center',
+  },
+  thumbText: {
+    fontFamily: 'Inter_400Regular',
+    fontSize: 12,
+    color: '#a1a1a1',
+    marginTop: hp(1),
+  },
 });
