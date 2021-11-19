@@ -5,6 +5,10 @@ import {
   arrayUnion,
   arrayRemove,
   increment,
+  collection,
+  query,
+  where,
+  documentId,
 } from 'firebase/firestore';
 import { auth, firestore } from './firebase';
 
@@ -44,6 +48,43 @@ export const setFavorite = async (isFavorite, recipeUid) => {
         { merge: true }
       );
     }
+  } catch (error) {
+    throw error.message;
+  }
+};
+
+export const getUserFavoritesList = (setFavoriteList) => {
+  const { uid } = auth.currentUser;
+
+  try {
+    const userRef = doc(firestore, 'users', uid);
+
+    return onSnapshot(userRef, (snp) => {
+      const userFavorites = snp.data().favorites || [];
+
+      setFavoriteList(userFavorites);
+    });
+  } catch (error) {
+    throw error.message;
+  }
+};
+
+export const getUserFavorites = (recipeList = [], setFavorites) => {
+  try {
+    const recipesRef = collection(firestore, 'recipes');
+    const recipesQuery = query(
+      recipesRef,
+      where(documentId(), 'in', recipeList)
+    );
+
+    return onSnapshot(recipesQuery, (snp) => {
+      const res = [];
+      snp.forEach((i) => {
+        res.push({ uid: i.id, ...i.data() });
+      });
+
+      setFavorites(res);
+    });
   } catch (error) {
     throw error.message;
   }
