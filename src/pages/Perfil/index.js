@@ -95,7 +95,11 @@ export default function Perfil() {
           </View>
         )}
         {recipes.map((i) => (
-          <CardMinhaReceita key={i.uid} {...i} />
+          <CardMinhaReceita
+            key={i.uid}
+            {...i}
+            onPress={() => navigate('ModoPreparo', { recipe: i })}
+          />
         ))}
       </ScrollView>
     </Layout>

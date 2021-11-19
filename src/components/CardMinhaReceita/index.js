@@ -10,7 +10,7 @@ export default function CardMinhaReceita({
   thumbUrl,
   timeToPrepare,
   onPress,
-  likes,
+  favoriteCounter,
 }) {
   return (
     <TouchableOpacity
@@ -36,7 +36,7 @@ export default function CardMinhaReceita({
             <View style={styles.footer}>
               <View style={styles.row}>
                 <Feather name="heart" size={24} color="#FFF" />
-                <Text style={styles.likeLabel}>{likes || 0}</Text>
+                <Text style={styles.likeLabel}>{favoriteCounter || 0}</Text>
               </View>
 
               <Button

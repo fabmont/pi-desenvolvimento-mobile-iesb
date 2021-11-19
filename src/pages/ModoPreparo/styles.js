@@ -19,7 +19,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   coverImg: {
-    height: hp(30),
+    height: hp(20),
     width: '100%',
     borderRadius: wp(5),
     marginTop: wp(4),
@@ -32,6 +32,7 @@ export default StyleSheet.create({
     fontFamily: 'Inter_400Regular',
     opacity: 0.4,
     marginTop: hp(0.5),
+    marginBottom: hp(2),
   },
   timeBadge: {
     flexDirection: 'row',
@@ -61,11 +62,25 @@ export default StyleSheet.create({
     color: '#01885B',
     fontFamily: 'Inter_400Regular',
   },
+  categoryBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(65, 123, 217, 0.15)',
+    borderRadius: wp(1),
+    paddingHorizontal: wp(2),
+    paddingVertical: hp(0.3),
+    marginRight: wp(2),
+  },
+  categoryBadgeText: {
+    color: 'rgb(65, 123, 217)',
+    marginLeft: 4,
+    fontFamily: 'Inter_400Regular',
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: hp(2),
-    marginBottom: hp(2),
+    marginBottom: hp(0.8),
   },
   section: {
     padding: wp(3),
