@@ -26,6 +26,12 @@ export default StyleSheet.create({
   },
   userInfoText: {
     fontFamily: 'Inter_400Regular',
+    fontSize: 14,
+    opacity: 0.7,
+    marginBottom: hp(0.5),
+  },
+  userName: {
+    fontFamily: 'Inter_700Bold',
     marginBottom: hp(0.5),
   },
   bioBox: {

@@ -12,6 +12,7 @@ import {
   Inter_500Medium,
   Inter_900Black,
 } from '@expo-google-fonts/inter';
+import Toast from 'react-native-toast-message';
 
 import Login from './Login';
 import CriarConta from './CriarConta';
@@ -57,71 +58,74 @@ export default function Pages() {
   const [user, loading, error] = useAuthState(auth);
   const isLogged = !!user && !loading && !error;
 
-  if (!fontsLoaded) {
+  if (!fontsLoaded || loading) {
     return <AppLoading />;
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {isLogged ? (
-          <>
-            <Stack.Screen
-              name="Home"
-              component={TabViews}
-              {...defaultRouteProps}
-            />
-            <Stack.Screen
-              name="Favoritos"
-              component={Favoritos}
-              {...defaultRouteProps}
-            />
-            <Stack.Screen
-              name="Detalhes"
-              component={DetalhesReceita}
-              {...defaultRouteProps}
-            />
-            <Stack.Screen
-              name="ModoPreparo"
-              component={ModoPreparo}
-              {...defaultRouteProps}
-            />
-            <Stack.Screen
-              name="EditarReceita"
-              component={EditarPerfil}
-              {...defaultRouteProps}
-            />
-            <Stack.Screen
-              name="CriarReceita"
-              component={CriarReceita}
-              {...defaultRouteProps}
-            />
-            <Stack.Screen
-              name="Perfil"
-              component={Perfil}
-              {...defaultRouteProps}
-            />
-            <Stack.Screen
-              name="EditarPerfil"
-              component={EditarPerfil}
-              {...defaultRouteProps}
-            />
-          </>
-        ) : (
-          <>
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              {...defaultRouteProps}
-            />
-            <Stack.Screen
-              name="CriarConta"
-              component={CriarConta}
-              {...defaultRouteProps}
-            />
-          </>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <NavigationContainer>
+        <Stack.Navigator>
+          {isLogged ? (
+            <>
+              <Stack.Screen
+                name="Home"
+                component={TabViews}
+                {...defaultRouteProps}
+              />
+              <Stack.Screen
+                name="Favoritos"
+                component={Favoritos}
+                {...defaultRouteProps}
+              />
+              <Stack.Screen
+                name="Detalhes"
+                component={DetalhesReceita}
+                {...defaultRouteProps}
+              />
+              <Stack.Screen
+                name="ModoPreparo"
+                component={ModoPreparo}
+                {...defaultRouteProps}
+              />
+              <Stack.Screen
+                name="EditarReceita"
+                component={EditarPerfil}
+                {...defaultRouteProps}
+              />
+              <Stack.Screen
+                name="CriarReceita"
+                component={CriarReceita}
+                {...defaultRouteProps}
+              />
+              <Stack.Screen
+                name="Perfil"
+                component={Perfil}
+                {...defaultRouteProps}
+              />
+              <Stack.Screen
+                name="EditarPerfil"
+                component={EditarPerfil}
+                {...defaultRouteProps}
+              />
+            </>
+          ) : (
+            <>
+              <Stack.Screen
+                name="Login"
+                component={Login}
+                {...defaultRouteProps}
+              />
+              <Stack.Screen
+                name="CriarConta"
+                component={CriarConta}
+                {...defaultRouteProps}
+              />
+            </>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+      <Toast />
+    </>
   );
 }

@@ -1,92 +1,105 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import {
   Layout,
   Text,
   Avatar,
   TopNavigationAction,
-  OverflowMenu,
   Icon,
-  MenuItem,
+  Button,
 } from '@ui-kitten/components';
-import Toolbar from '../../components/Toolbar';
-import CardMinhaReceita from '../../components/CardMinhaReceita';
+import { signOut } from 'firebase/auth';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 import styles from './styles';
-
-const data = [
-  {
-    uuid: '2321jh32hg3u12g3u12',
-    title: 'Salada Caesar',
-    imgUrl:
-      'https://www.dicasdemulher.com.br/wp-content/uploads/2017/10/salada-caesar-receitas.jpg',
-    owner: 'John Due',
-    timeToPrepare: 15,
-    difficulty: 'Fácil',
-  },
-];
+import getUserInfo from '../../services/getUserInfo';
+import defaultAvatar from '../../constants/defaultAvatar';
+import Toolbar from '../../components/Toolbar';
+import CardMinhaReceita from '../../components/CardMinhaReceita';
+import { auth } from '../../services/firebase';
+import getRecipesByUser from '../../services/getRecipesByUser';
 
 export default function Perfil() {
-  const [openPopup, setOpenPopup] = useState(false);
+  const { navigate } = useNavigation();
+  const [userInfo, setUserInfo] = useState(null);
+  const [recipes, setRecipes] = useState([]);
 
-  const toggleMenu = () => {
-    setOpenPopup(!openPopup);
-  };
-
-  const renderMenuAction = () => (
+  const renderRightAction = () => (
     <TopNavigationAction
-      icon={(props) => <Icon {...props} name="more-vertical" />}
-      onPress={toggleMenu}
+      onPress={() => signOut(auth)}
+      icon={(props) => <Icon {...props} name="log-out" />}
     />
   );
 
-  const renderRightActions = () => (
-    <>
-      <TopNavigationAction icon={(props) => <Icon {...props} name="edit" />} />
-      <OverflowMenu
-        anchor={renderMenuAction}
-        visible={openPopup}
-        onBackdropPress={toggleMenu}
-      >
-        <MenuItem
-          accessoryLeft={(props) => <Icon {...props} name="log-out" />}
-          title="Sair"
-        />
-      </OverflowMenu>
-    </>
-  );
+  useEffect(() => {
+    const listener = getUserInfo(setUserInfo);
+    const listenerRecipes = getRecipesByUser(setRecipes);
+
+    return () => {
+      listener();
+      listenerRecipes();
+    };
+  }, []);
 
   return (
     <Layout style={styles.container}>
       <Toolbar
-        alignment="start"
-        title="User Name"
-        accessoryRight={renderRightActions}
+        alignment="center"
+        title="Perfil"
+        accessoryRight={renderRightAction}
       />
       <ScrollView>
         <View style={styles.headerContainer}>
           <Avatar
             style={styles.avatar}
             source={{
-              uri: 'https://randomuser.me/api/portraits/men/79.jpg',
+              uri: userInfo?.thumbUrl || defaultAvatar,
             }}
           />
 
           <View style={styles.userInfoBox}>
-            <Text style={styles.userInfoText}>user@mail.com</Text>
-            <Text style={styles.userInfoText}>25 anos</Text>
-            <Text style={styles.userInfoText}>Cozinheiro gastronômico</Text>
+            <Text style={styles.userName}>{userInfo?.fullName}</Text>
+            <Text style={styles.userInfoText}>{userInfo?.email}</Text>
+            <Text style={styles.userInfoText}>
+              {userInfo?.age && `${userInfo?.age} anos`}{' '}
+            </Text>
+            <Text style={styles.userInfoText}>{userInfo?.occupation}</Text>
           </View>
         </View>
         <View style={styles.bioBox}>
-          <Text style={styles.userInfoText}>
-            Sou um jovem recém formado em gastronomia e apaixonado pela
-            culinária brasileira.
-          </Text>
+          <Text style={styles.userInfoText}>{userInfo?.bio}</Text>
+
+          <Button
+            size="small"
+            appearance="outline"
+            status="primary"
+            style={{ marginTop: 12 }}
+            onPress={() => navigate('EditarPerfil', { ...userInfo })}
+          >
+            Editar perfil
+          </Button>
         </View>
 
-        {data.map((i) => (
-          <CardMinhaReceita key={i.uuid} {...i} />
+        {!recipes.length && (
+          <View
+            style={{
+              height: heightPercentageToDP(40),
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Text style={{ color: '#a1a1a1' }}>
+              Você ainda não criou nenhuma receita.
+            </Text>
+          </View>
+        )}
+        {recipes.map((i) => (
+          <CardMinhaReceita
+            key={i.uid}
+            {...i}
+            onPress={() => navigate('ModoPreparo', { recipe: i })}
+          />
         ))}
       </ScrollView>
     </Layout>

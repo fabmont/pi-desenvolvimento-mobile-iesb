@@ -129,7 +129,11 @@ export default function Feed() {
           keyExtractor={({ uuid }) => uuid}
         />
 
-        <FloatingButton iconName="plus" label="Criar receita" />
+        <FloatingButton
+          iconName="plus"
+          label="Criar receita"
+          onPress={() => navigate('CriarReceita')}
+        />
 
         <FilterModal
           visible={filterModalVisible}
