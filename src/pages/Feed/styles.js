@@ -75,4 +75,15 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  alertBox: {
+    backgroundColor: '#FF5126',
+    padding: 12,
+    margin: 16,
+    borderRadius: 12,
+  },
+  alertText: {
+    fontFamily: 'Inter_400Regular',
+    color: 'white',
+    textAlign: 'center',
+  },
 });

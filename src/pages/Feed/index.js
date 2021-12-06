@@ -1,5 +1,5 @@
 /* eslint-disable react/style-prop-object */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Keyboard,
   TextInput,
@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
   FlatList,
+  RefreshControl,
 } from 'react-native';
 import { Layout, Text } from '@ui-kitten/components';
 import { Feather } from '@expo/vector-icons';
@@ -18,11 +19,15 @@ import CardReceita from '../../components/CardReceita';
 import FloatingButton from '../../components/FloatingButton';
 import FilterModal from '../../components/FilterModal';
 import categories from '../../constants/categories';
+import getFeedRecipes from '../../services/getFeedRecipes';
 
 export default function Feed() {
   const { navigate } = useNavigation();
   const [search, setSearch] = useState('');
   const [filterModalVisible, setFilterModalVisible] = useState(false);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [categoryState, setCategoryState] = useState(
     categories.map((item) => ({
       id: item.id,
@@ -31,19 +36,24 @@ export default function Feed() {
     }))
   );
 
-  const data = [
-    {
-      uuid: '2321jh32hg3u12g3u12',
-      title: 'Salada Caesar',
-      imgUrl:
-        'https://www.dicasdemulher.com.br/wp-content/uploads/2017/10/salada-caesar-receitas.jpg',
-      owner: 'John Due',
-      timeToPrepare: 15,
-      difficulty: 'Fácil',
-    },
-  ];
+  console.log(data);
 
   const handleClearSearch = () => setSearch('');
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      await getFeedRecipes(setData);
+      setError(null);
+    } catch (err) {
+      setError(err);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -72,7 +82,7 @@ export default function Feed() {
             )}
           </View>
 
-          <View style={styles.filterRow}>
+          {/* <View style={styles.filterRow}>
             <TouchableOpacity activeOpacity={0.7} style={styles.filterBadge}>
               <Feather
                 name="chevron-down"
@@ -107,24 +117,22 @@ export default function Feed() {
                 Filtros
               </Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
+
+        {error && (
+          <View style={styles.alertBox}>
+            <Text style={styles.alertText}>{error}</Text>
+          </View>
+        )}
 
         <FlatList
           data={[...data]}
           style={{ paddingTop: hp(2) }}
-          renderItem={({
-            item: { title, imgUrl, owner, timeToPrepare, difficulty },
-          }) => (
-            <CardReceita
-              title={title}
-              imgUrl={imgUrl}
-              owner={owner}
-              timeToPrepare={timeToPrepare}
-              difficulty={difficulty}
-              onPress={() => navigate('ModoPreparo')}
-            />
-          )}
+          refreshControl={
+            <RefreshControl refreshing={loading} onRefresh={fetchData} />
+          }
+          renderItem={({ item }) => <CardReceita key={item?.uid} {...item} />}
           ListFooterComponent={<View style={{ flex: 1, height: hp(12) }} />}
           keyExtractor={({ uuid }) => uuid}
         />

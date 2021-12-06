@@ -4,8 +4,10 @@ import { Button, Icon, Text } from '@ui-kitten/components';
 import { Feather } from '@expo/vector-icons';
 
 import styles from './styles';
+import deleteRecipe from '../../services/deleteRecipe';
 
 export default function CardMinhaReceita({
+  uid,
   title,
   thumbUrl,
   timeToPrepare,
@@ -41,7 +43,8 @@ export default function CardMinhaReceita({
 
               <Button
                 size="small"
-                accessoryLeft={(props) => <Icon {...props} name="edit" />}
+                accessoryLeft={(props) => <Icon {...props} name="trash" />}
+                onPress={() => deleteRecipe(uid)}
               />
             </View>
           </View>
