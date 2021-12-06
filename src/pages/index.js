@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import React from 'react';
+import { LogBox } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -33,6 +34,8 @@ const defaultRouteProps = {
     headerShown: false,
   },
 };
+
+LogBox.ignoreAllLogs();
 
 const TabViews = () => (
   <Tabs.Navigator tabBar={Tabbar}>

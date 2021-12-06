@@ -24,6 +24,7 @@
     "expo-status-bar": "~1.0.4",
     "firebase": "9.3.0",
     "formik": "^2.2.9",
+    "lodash.debounce": "^4.0.8",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-firebase-hooks": "^3.0.4",
