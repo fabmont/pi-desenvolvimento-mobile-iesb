@@ -36,8 +36,6 @@ export default function Feed() {
     }))
   );
 
-  console.log(data);
-
   const handleClearSearch = () => setSearch('');
 
   const fetchData = async () => {
