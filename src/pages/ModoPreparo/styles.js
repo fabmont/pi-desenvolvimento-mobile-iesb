@@ -16,7 +16,7 @@ export default StyleSheet.create({
   },
   body: {
     paddingHorizontal: wp(4),
-    paddingBottom: hp(4),
+    paddingBottom: hp(10),
     alignItems: 'center',
   },
   coverImg: {

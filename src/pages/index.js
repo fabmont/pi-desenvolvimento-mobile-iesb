@@ -18,7 +18,6 @@ import Login from './Login';
 import CriarConta from './CriarConta';
 import Feed from './Feed';
 import Favoritos from './Favoritos';
-import DetalhesReceita from './DetalhesReceita';
 import ModoPreparo from './ModoPreparo';
 import CriarReceita from './CriarReceita';
 import Perfil from './Perfil';
@@ -76,11 +75,6 @@ export default function Pages() {
               <Stack.Screen
                 name="Favoritos"
                 component={Favoritos}
-                {...defaultRouteProps}
-              />
-              <Stack.Screen
-                name="Detalhes"
-                component={DetalhesReceita}
                 {...defaultRouteProps}
               />
               <Stack.Screen
