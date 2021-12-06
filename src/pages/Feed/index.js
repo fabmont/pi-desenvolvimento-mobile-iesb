@@ -1,5 +1,5 @@
 /* eslint-disable react/style-prop-object */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Keyboard,
   TextInput,
@@ -13,7 +13,6 @@ import { Layout, Text } from '@ui-kitten/components';
 import { Feather } from '@expo/vector-icons';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
-import debounce from 'lodash.debounce';
 
 import styles from './styles';
 import CardReceita from '../../components/CardReceita';
@@ -27,7 +26,6 @@ export default function Feed() {
   const [search, setSearch] = useState('');
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [data, setData] = useState([]);
-  const [filterSearch, setFilterSearch] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [categoryState, setCategoryState] = useState(
@@ -51,29 +49,19 @@ export default function Feed() {
     setLoading(false);
   };
 
-  const applySearch = (searchWord) => {
-    if (!searchWord) {
-      setFilterSearch(data);
+  const applySearch = () => {
+    if (!search) {
+      return data;
     }
-    setFilterSearch((prev) =>
-      prev.filter((i) =>
-        i?.title?.toLowerCase()?.includes(searchWord?.toLowerCase())
-      )
+
+    return data.filter((i) =>
+      i?.title?.toLowerCase()?.includes(search?.toLowerCase())
     );
   };
-
-  const debounced = useCallback(
-    debounce((searchWord) => applySearch(searchWord), 500),
-    []
-  );
 
   useEffect(() => {
     fetchData();
   }, []);
-
-  useEffect(() => {
-    debounced(search);
-  }, [search]);
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -110,7 +98,7 @@ export default function Feed() {
         )}
 
         <FlatList
-          data={search.length ? filterSearch : data}
+          data={applySearch()}
           style={{ paddingTop: hp(2) }}
           refreshControl={
             <RefreshControl refreshing={loading} onRefresh={fetchData} />
