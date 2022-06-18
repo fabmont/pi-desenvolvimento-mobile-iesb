@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import React from 'react';
+import { LogBox } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -18,7 +19,6 @@ import Login from './Login';
 import CriarConta from './CriarConta';
 import Feed from './Feed';
 import Favoritos from './Favoritos';
-import DetalhesReceita from './DetalhesReceita';
 import ModoPreparo from './ModoPreparo';
 import CriarReceita from './CriarReceita';
 import Perfil from './Perfil';
@@ -34,6 +34,8 @@ const defaultRouteProps = {
     headerShown: false,
   },
 };
+
+LogBox.ignoreAllLogs();
 
 const TabViews = () => (
   <Tabs.Navigator tabBar={Tabbar}>
@@ -76,11 +78,6 @@ export default function Pages() {
               <Stack.Screen
                 name="Favoritos"
                 component={Favoritos}
-                {...defaultRouteProps}
-              />
-              <Stack.Screen
-                name="Detalhes"
-                component={DetalhesReceita}
                 {...defaultRouteProps}
               />
               <Stack.Screen

@@ -12,10 +12,11 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: getStatusBarHeight(),
-    paddingBottom: getBottomSpace() + hp(2),
+    paddingBottom: getBottomSpace(),
   },
   body: {
     paddingHorizontal: wp(4),
+    paddingBottom: hp(10),
     alignItems: 'center',
   },
   coverImg: {

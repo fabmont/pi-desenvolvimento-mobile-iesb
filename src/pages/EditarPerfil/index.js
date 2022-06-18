@@ -10,6 +10,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import Toast from 'react-native-toast-message';
+import { useNavigation } from '@react-navigation/native';
 
 import Toolbar from '../../components/Toolbar';
 import LoadingIndicator from '../../components/LoadingIndicator';
@@ -24,6 +25,7 @@ export default function EditarPerfil(props) {
   } = props;
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { goBack } = useNavigation();
 
   useEffect(() => {
     const getPermissions = async () => {
@@ -65,6 +67,8 @@ export default function EditarPerfil(props) {
         text1: 'Alterações salvas com sucesso.',
         position: 'bottom',
       });
+
+      goBack();
     } catch (error) {
       Toast.show({
         type: 'error',
