@@ -1,47 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
-import { Layout, Text, List } from '@ui-kitten/components';
-
-import styles from './styles';
+import React from 'react';
 import {
-  getUserFavorites,
-  getUserFavoritesList,
-} from '../../services/isFavoriteListener';
-import CardReceita from '../../components/CardReceita';
+ View, 
+ Text 
+} from 'react-native';
+import CardFavorito from '../../components/CardFavoritos';
+import styles from './styles';
+
+const data = [
+    {
+      uuid: '2321jh32hg3u12g3u12',
+      title: 'Salada',
+      imgUrl:
+        'https://www.dicasdemulher.com.br/wp-content/uploads/2017/10/salada-caesar-receitas.jpg',
+      owner: 'John Due',
+      timeToPrepare: 15,
+      difficulty: 'Fácil',
+    },
+  ];
 
 export default function Favoritos() {
-  const [list, setList] = useState([]);
-  const [favorites, setFavorites] = useState([]);
-
-  const renderItem = ({ item }) => <CardReceita {...item} fromFavorites />;
-
-  useEffect(() => {
-    const listener = getUserFavoritesList(setList);
-
-    return () => {
-      listener();
-    };
-  }, []);
-
-  useEffect(() => {
-    const queryList = list.length ? list : ['1'];
-    const favoritedRecipesListener = getUserFavorites(queryList, setFavorites);
-
-    return () => favoritedRecipesListener();
-  }, [list]);
-
   return (
-    <Layout style={styles.container}>
-      <View style={styles.header}>
-        <Text category="h4" style={styles.headerTitle}>
-          Favoritos
-        </Text>
-      </View>
-      <List
-        data={favorites}
-        renderItem={renderItem}
-        style={{ height: '100%', paddingTop: 12 }}
-      />
-    </Layout>
+    <FlatList
+          data={[...data]}
+          style={{ paddingTop: hp(2) }}
+          renderItem={({
+            item: { title, imgUrl, owner, timeToPrepare, difficulty },
+          }) => (
+            <CardFavorito
+              title={title}
+              imgUrl={imgUrl}
+              owner={owner}
+              timeToPrepare={timeToPrepare}
+              difficulty={difficulty}
+              onPress={() => null}
+            />
+          )}
+          ListFooterComponent={<View style={{ flex: 1, height: hp(12) }} />}
+          keyExtractor={({ uuid }) => uuid}
+        />
   );
 }
